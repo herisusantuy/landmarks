@@ -1,32 +1,33 @@
 //
-//  ContentView.swift
+//  LandmarkDetail.swift
 //  Landmarks
 //
-//  Created by Heri Susanto on 04/04/21.
+//  Created by Heri Susanto on 05/04/21.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct LandmarkDetail: View {
+    var landmark: Landmark
     var body: some View {
-        VStack {
-            MapView()
+        ScrollView {
+            MapView(coordinate: landmark.locationCoordinates)
                 .ignoresSafeArea(edges: .top)
                 .frame(height: 300)
-            CircleImage()
+            CircleImage(image:landmark.image)
                 .offset(y: -130)
                 .padding(.bottom, -130)
             
             VStack(alignment: .leading) {
-                Text("Turtle Rock!")
+                Text(landmark.name)
                     .font(.title)
                     .foregroundColor(.green)
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 HStack {
-                    Text("Joshua Tree National Park")
+                    Text(landmark.park)
                         .font(.subheadline)
                     Spacer()
-                    Text("California")
+                    Text(landmark.state)
                         .font(.subheadline)
                 }
                 .font(.subheadline)
@@ -34,20 +35,21 @@ struct ContentView: View {
                 
                 Divider()
                 
-                Text("About Turtle Rock")
-                    .font(.title2) 
-                Text("Turtle rock is land that you can play with Turle in the rock.")
+                Text("About \(landmark.name)")
+                    .font(.title2)
+                Text(landmark.description)
                 
                 
             }
             .padding()
-            Spacer()
         }
+        .navigationTitle(landmark.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct LandmarkDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        LandmarkDetail(landmark: landmarks[4])
     }
 }
